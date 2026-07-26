@@ -3,7 +3,7 @@ from src.nmap_netcheck import *
 
 # Run this from the parent path with : sudo python3 -m test.function_check
 
-print("Hello World")
+print("Test function call checks:")
 A = check_icmp("192.168.0.181")
 B = check_tcp("192.168.0.181","22")
 C = check_udp("192.168.0.181","137")
