@@ -1,3 +1,6 @@
+#################################
+# fw-policy-test Makefile targets
+#################################
 
 PROJECT := fw-policy-test
 VERSION_TAG := 0.1
@@ -11,6 +14,7 @@ help:
 	@echo "- make run-docker: run $(PROJECT) as a docker image container"
 	@echo "- make clean-docker: clean & remove docker image $(PROJECT)"
 	@echo "- make create-docker: create docker image $(PROJECT)"
+	@echo "- make test-function: performs basic python module function calls"
 
 run-pytest:
 	@echo "Running fw-policy-test as a pytest script"
@@ -33,3 +37,7 @@ clean-docker:
 create-docker: Dockerfile
 	@echo "Creating docker image file using the following image tag: $(DOCKER_IMAGE)"
 	@docker build -f Dockerfile -t $(DOCKER_IMAGE) .
+
+test-function:
+	@echo "Testing core function"
+	@sudo python3 -m tests.function_check
