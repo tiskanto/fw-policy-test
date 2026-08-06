@@ -1,0 +1,21 @@
+#############################################################################
+# The following are samples of PromQL query that can be used on a dashboard #
+#############################################################################
+
+# Nummber of failed test(s)
+promQL : count({__name__ =~ "IP_.*"} == 0)
+
+# number of successful test(s)
+promQL : count({__name__ =~ "IP_.*"} == 1)
+
+# list of successful test(s)
+promQL : {__name__ =~ "IP_.*"} == 1
+
+# list of failed test(s)
+promQL : {__name__ =~ "IP_.*"} == 0
+
+# number of total test(s)
+promQL : count({__name__ =~ "IP_.*"})
+
+# list of total test(s)
+promQL : {__name__ =~ "IP_.*"}
