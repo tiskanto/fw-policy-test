@@ -1,0 +1,40 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: fw-policy-test-pgw-v1
+  labels:
+    app: fw-policy-test-pgw-v1
+spec:
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        spec:
+          hostNetwork: true
+          containers:
+          - name: fw-policy-test-pgw
+            image: fw-policy-test:0.1
+            imagePullPolicy: Never
+            command: ["pytest"]
+            args: ["-v" , "-s", "--tb=no"]
+
+            securityContext:
+              privileged: true
+              runAsUser: 0
+              capabilities:
+                    add:
+                      - NET_RAW
+                      - NET_ADMIN
+
+            terminationMessagePath: /var/log/fw-policy-test.log
+            stdin: true
+            tty: true
+            env:
+              - name: PROM_PGW_ENABLED
+                value: "1"
+              - name: PROM_PGW_HOST
+                value: "192.168.0.223:9091"
+          restartPolicy: Never
+
