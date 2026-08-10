@@ -1,0 +1,15 @@
+global:
+  scrape_interval: 15s # How often to scrape targets (e.g., the Pushgateway)
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'pushgateway'
+    # honor_labels: true ensures the original job/instance labels from the pushed metrics are kept
+    # instead of being overwritten by Prometheus's scrape labels
+    honor_labels: true
+    static_configs:
+      # Use the service name and exposed port
+      - targets: ['pushgateway:9091']
