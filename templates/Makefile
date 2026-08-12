@@ -4,29 +4,43 @@
 
 KUBECTL := kubectl
 CHECK_KUBECTL := $(shell which $(KUBECTL) | grep -c '[[:alnum:]]' )
-
 K8_CRON_FILE := fw-policy-test.yaml
 K8_CRON_PGW_FILE := fw-policy-test-pgw.yaml
 
 .PHONY: k8-cronjob
 k8-cronjob: check-kubectl
 	@ if [ -f "$(K8_CRON_FILE)" ]; then \
-		echo "$(K8_CRON_FILE) exists" ;\
-		echo "line2 exists" ;\
+		echo "File: $(K8_CRON_FILE) exists" ;\
 		$(KUBECTL) apply -f $(K8_CRON_FILE) ;\
 	else \
-		echo "$(K8_CRON_FILE) cannot be found" ;\
-		echo "line2 for cannot be found exists" ;\
+		echo "File: $(K8_CRON_FILE) cannot be found" ;\
 	fi
 
+.PHONY: clean-k8-cronjob
 clean-k8-cronjob: check-kubectl
 	@ if [ -f "$(K8_CRON_FILE)" ]; then \
-		echo "$(K8_CRON_FILE) exists" ;\
-		echo "line2 exists" ;\
+		echo "File: $(K8_CRON_FILE) exists" ;\
 		$(KUBECTL) delete -f $(K8_CRON_FILE) ;\
 	else \
-		echo "$(K8_CRON_FILE) cannot be found" ;\
-		echo "line2 for cannot be found exists" ;\
+		echo "File: $(K8_CRON_FILE) cannot be found" ;\
+	fi
+
+.PHONY: k8-cronjobi-pgw
+k8-cronjob-pgw: check-kubectl
+	@ if [ -f "$(K8_CRON_PGW_FILE)" ]; then \
+		echo "File: $(K8_CRON_PGW_FILE) exists" ;\
+		$(KUBECTL) apply -f $(K8_CRON_PGW_FILE) ;\
+	else \
+		echo "File: $(K8_CRON_PGW_FILE) cannot be found" ;\
+	fi
+
+.PHONY: clean-k8-cronjob-pgw
+clean-k8-cronjob-pgw: check-kubectl
+	@ if [ -f "$(K8_CRON_PGW_FILE)" ]; then \
+		echo "File: $(K8_CRON_PGW_FILE) exists" ;\
+		$(KUBECTL) delete -f $(K8_CRON_PGW_FILE) ;\
+	else \
+		echo "File: $(K8_CRON_PGW_FILE) cannot be found" ;\
 	fi
 
 .PHONY: list-k8-cronjob
