@@ -7,6 +7,16 @@ CHECK_KUBECTL := $(shell which $(KUBECTL) | grep -c '[[:alnum:]]' )
 K8_CRON_FILE := fw-policy-test.yaml
 K8_CRON_PGW_FILE := fw-policy-test-pgw.yaml
 
+.PHONY: help
+help:
+	@ echo "'make' options are:"
+	@ echo " - make k8-cronjob: create a kubernetes cronjob"
+	@ echo " - make k8-cronjob-pgw: create a kubernetes cronjob with push-gateway turned on"
+	@ echo " - make clean-k8-cronjob: clean a kubernetes cronjob"
+	@ echo " - make clean-k8-cronjob-pgw: clean a kubernetes cronjob that has push-gateway turned on"
+	@ echo " - make list-k8-cronkjob: list kubernetes cronjob"
+	@ echo " - make check-kubectl: check if kubectl binary exists"
+	
 .PHONY: k8-cronjob
 k8-cronjob: check-kubectl
 	@ if [ -f "$(K8_CRON_FILE)" ]; then \
