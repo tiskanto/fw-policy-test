@@ -1,4 +1,10 @@
 ---
+# #################################################
+# fw-policy-test execution by using k8-cronjob task
+# with Prometheus Push-Gateway enabled
+# PROM_PGW_HOST = 192.168.0.223:9091
+# #################################################
+
 apiVersion: batch/v1
 kind: CronJob
 metadata:
