@@ -1,5 +1,13 @@
+
+# ###################################################
+# Basic Prometheus scrapper configuration
+# Target(s): local prometheus & local pushgateway
+# Reference: docker-compose.yaml
+# ###################################################
+
 global:
-  scrape_interval: 15s # How often to scrape targets (e.g., the Pushgateway)
+ # How often to scrape targets (e.g., the Pushgateway)
+  scrape_interval: 15s
 
 scrape_configs:
   - job_name: 'prometheus'
