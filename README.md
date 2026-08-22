@@ -100,8 +100,10 @@ shell> make run-docker
 ```
 
 The output:
+
 ![make-run-docker](docs/pics/sample-execution-fw-policy-test.png)
 
 Other execution options:
+
 ![make-options](docs/pics/make-options.png)
 
