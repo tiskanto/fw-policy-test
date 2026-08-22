@@ -9,6 +9,7 @@
 - [Test Case File](#test-case-file)
   - [Sample Test Case](#sample-test-case)
   - [Test Case Format](#test-case-format)
+- [Running the Application](#running-the-application)
 ---
 
 ## What:
@@ -90,4 +91,17 @@ The test case file is in `YAML` format and the test case should reflect on what 
 | port | integer | port of the protocol, possible option: TCP: 1-65535 / UDP: 1-65535 / ICMP: 0 |
 | expected | integer | possible options: 0: blocked / 1: open / 2: open/filtered / 3: other than above |
 
+## Running the application:
+
+The following is how to execute/run the application as a dockerized container application:
+
+```
+shell> make run-docker
+```
+
+The output:
+![make-run-docker](docs/pics/sample-execution-fw-policy-test.png)
+
+Other execution options:
+![make-options](docs/pics/make-options.png)
 
