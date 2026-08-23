@@ -26,7 +26,7 @@
 For observability and monitoring purposes, `fw-policy-test` can be integrated with `prometheus` and `push-gateways` infrastructures.
 
 ## Why:
-The background idea is to ensure that firewall policy compliances can be verified through a set of tests against target hosts. These set of tests can be either positive or negative tests which can easily configured in a configuration file.
+The background idea is to ensure that firewall policy compliances can be verified through a set of tests against target hosts. These set of tests can be either positive or negative tests which can easily be configured in a configuration file.
 
 ## Use cases:
 - Firewall policy verification tool
@@ -53,7 +53,7 @@ Performed a `git clone` command:
 shell> git clone https://github.com/tiskanto/fw-policy-test.git
 ```
 
-and depending on how you want to run the application, you can either perform one of these options:
+and depending on how you want to run the application, you can either perform one of these following options:
 
 ### Native python3 application
 
