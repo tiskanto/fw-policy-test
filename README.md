@@ -116,6 +116,8 @@ Other execution options:
 
 ### Running docker application with prometheus support
 
+For a more detailed implementation with `prometheus` and `push-gatway` please refer to [samples](samples) folder
+
 ```
 shell> make run-docker-pgw ENV_PROM_PGW_HOST=192.168.0.223:9091
 ```
