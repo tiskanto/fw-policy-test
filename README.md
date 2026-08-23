@@ -53,7 +53,7 @@ Performed a `git clone` command:
 shell> git clone https://github.com/tiskanto/fw-policy-test.git
 ```
 
-and depending on how you want to run the application from you can do one of these options:
+and depending on how you want to run the application, you can either perform one of these options:
 
 ### Native python3 application
 
