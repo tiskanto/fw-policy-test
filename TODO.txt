@@ -1,0 +1,9 @@
+- Fix grammar in README.me
+- Get the screenshots for the PGW chart stats
+- Fix the custom file execution on Makefile
+  >  docker run -v ./data/custom_test_case.yaml:/app/data/test_data.yaml -it fw-policy-test:0.1
+  >  Update the README.md
+- Get the samples doco ready for PGW implementation & guides
+- Update the README.md about installation
+- Tag for v0.01 release
+- Create Changelog - Release note

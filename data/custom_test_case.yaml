@@ -1,0 +1,36 @@
+---
+#######################################################
+# This is a simple custom test case for fw-policy-test
+#######################################################
+- hostname: Linux System A
+  ip_addr: 192.168.0.181
+  test_set:
+    - name: tcp_one
+      desc: testing SSH port
+      proto: tcp
+      port: 22
+      expected: 1
+- hostname: Linux System B
+  ip_addr: 192.168.0.191
+  test_set:
+    - name: icmp_one
+      desc: testing ICMP echo
+      proto: icmp
+      port: 0
+      expected: 0
+- hostname: Linux System C
+  ip_addr: 192.168.17.221
+  test_set:
+    - name: icmp one
+      desc: testing icmp
+      proto: icmp
+      port: 0
+      expected: 1
+- hostname: Linux System D
+  ip_addr: 192.168.19.222
+  test_set:
+    - name: icmp one
+      desc: testing icmp
+      proto: icmp
+      port: 0
+      expected: 1
