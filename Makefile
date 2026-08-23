@@ -50,7 +50,7 @@ else
 endif
 	@ echo "Running fw-policy-test as a docker image: $(DOCKER_IMAGE)"
 	@ echo "With prometheus push-gateway: $(ENV_PROM_PGW_HOST)"
-	@ docker run -e PROM_PGW_ENABLED=1 -e PROM_PGW_HOST=$(ENV_PROM_PGW_HOST) -t $(DOCKER_IMAGE)
+	@ docker run -e PROM_PGW_ENABLED=1 -e PROM_PGW_HOST=$(ENV_PROM_PGW_HOST) -t $(DOCKER_IMAGE) || true
 
 .PHONY: clean-docker
 clean-docker:

@@ -1,5 +1,5 @@
-- Fix grammar in README.me
-- Get the screenshots for the PGW chart stats
+- Fix grammar in README.me - [DONE]
+- Get the screenshots for the PGW chart stats - [DONE]
 - Fix the custom file execution on Makefile
   >  docker run -v ./data/custom_test_case.yaml:/app/data/test_data.yaml -it fw-policy-test:0.1
   >  Update the README.md

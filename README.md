@@ -10,29 +10,32 @@
   - [Sample Test Case](#sample-test-case)
   - [Test Case Format](#test-case-format)
 - [Running the Application](#running-the-application)
+  - [Running Docker Application](#running-docker-application)
+  - [Running Docker Application with Prometheus](#running-docker-application-with-prometheus-support)
+    - [Prometheus Metrics](#prometheus-metrics)
 ---
 
 ## What:
-`fw-policy-test` is a `pytest` native tool that can perform firewall policy verification against target hosts for compliance purposes.
+`fw-policy-test` is a `pytest` native application tool which can verify firewall policies. The verification process is done via connectivity tests which are performed against the target hosts inside the policy.
 
-`fw-policy-test` tool can be dynamically configured based on test scenarios and can be run natively via `pytest` or as a `docker` image container application. Since it can be run as a containerized application, it can be executed as a `k8 cronjobs`.
+`fw-policy-test` tool can be dynamically configured based on the test scenarios and can be run natively as a `python3` application or as a `docker` containerized application. Since `fw-policy-test` can be run as a containerized application, it can be executed as a scheduled `k8 cronjob` in kubernetes.
 
-Also for observability purpose it can also be integrated with `prometheus` and `push-gateways`
+For observability and monitoring purposes, `fw-policy-test` can be integrated with `prometheus` and `push-gateways` infrastructures.
 
 ## Why:
-The idea is to ensure that, through a set of tests against target hosts (this could be a positive test or negative test) a compliance verification of firewall policies can be ascertained and verified.
+The background idea is to ensure that firewall policy compliances can be verified through a set of tests against target hosts. These set of tests can be either positive or negative tests which can easily configured in a configuration file.
 
 ## Use cases:
 - Firewall policy verification tool
 - Compliance test & verification tool
 - Ensuring a policy is actively running against a target host/hosts
-- Audit verification tool on perimeter security policy
+- Audit verification tool for perimeter security policies
 
 ## Features:
 - Native `pytest` & `python3` application
 - Containerized friendly and can be run as a `docker` image
-- Can be run in `kubernetes` as a `k8 cronjob` or as an arbitrary application in `k8 job`
-- Extensible modules (future feature)
+- Can be run in `kubernetes` as a `k8 cronjob` or as an arbitrary application via `k8 job`
+- Modules can be easily extended (next feature)
 
 ## Design concept:
 Please find the following diagram for the architectural design of `fw-policy-test`
@@ -93,6 +96,9 @@ The test case file is in `YAML` format and the test case should reflect on what 
 
 ## Running the application:
 
+
+### Running docker application
+
 The following is how to execute/run the application as a dockerized container application:
 
 ```
@@ -107,3 +113,47 @@ Other execution options:
 
 ![make-options](docs/pics/make-options.png)
 
+
+### Running docker application with prometheus support
+
+```
+shell> make run-docker-pgw ENV_PROM_PGW_HOST=192.168.0.223:9091
+```
+
+The output:
+
+![make-run-docker-pgw](docs/pics/sample-execution-fw-policy-test-pgw.png)
+
+#### Prometheus metrics:
+
+Prometheus push-gatway individual metrics
+
+![prom-push-gw-metrics](docs/pics/prom-push-gw-metrics.png)
+
+Prometheus push-gatway all metrics
+
+![prom-push-gw-metrics-all](docs/pics/prom-push-gw-metrics-all.png)
+
+Prometheus chart failed list
+
+![prom-diagram-failed-list](docs/pics/prom-diagram-failed-list.png)
+
+Prometheus chart failed tests - count
+
+![prom-diagram-failed-tests](docs/pics/prom-diagram-failed-tests.png)
+
+Prometheus chart success list
+
+![prom-diagram-success-list](docs/pics/prom-diagram-success-list.png)
+
+Prometheus chart success tests - count
+
+![prom-diagram-success-tests](docs/pics/prom-diagram-success-tests.png)
+
+Prometheus chart total test list
+
+![prom-diagram-total-list](docs/pics/prom-diagram-total-list.png)
+
+Prometheus chart total tests - count
+
+![prom-diagram-total-tests](docs/pics/prom-diagram-total-tests.png)
