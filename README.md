@@ -6,6 +6,9 @@
 - [Use Case](#use-cases)
 - [Features](#features)
 - [Design Concept](#design-concept)
+- [Installation](#installation)
+  - [Native Python3 Application](#native-python3-application)
+  - [Docker Containerized Application](#docker-containerized-application)
 - [Test Case File](#test-case-file)
   - [Sample Test Case](#sample-test-case)
   - [Test Case Format](#test-case-format)
@@ -41,6 +44,37 @@ The background idea is to ensure that firewall policy compliances can be verifie
 Please find the following diagram for the architectural design of `fw-policy-test`
 
 ![diagram](docs/pics/fw-policy-test-diagram.png)
+
+## Installation:
+Installation can be done with the following steps:
+
+Performed a `git clone` command:
+```
+shell> git clone https://github.com/tiskanto/fw-policy-test.git
+```
+
+and depending on how you want to run the application from you can do one of these options:
+
+### Native python3 application
+
+```
+shell> pip install --upgrade pip setuptools
+shell> pip install -r requirements.txt
+
+```
+once completed then proceed with the following:
+
+```
+shell> make test-function
+shell> make run-pytest
+```
+
+### Docker containerized application
+
+```
+shell> make create-docker
+shell> make run-docker
+```
 
 ## Test case file:
 The test case file is in `YAML` format and the test case should reflect on what tests need to be performed and the expected test results from the target host(s). 
@@ -116,7 +150,7 @@ Other execution options:
 
 ### Running docker application with prometheus support
 
-For a more detailed implementation with `prometheus` and `push-gatway` please refer to [samples](samples) folder
+For a more detailed implementation with `prometheus` and `push-gateway` please refer to [samples](samples) folder
 
 ```
 shell> make run-docker-pgw ENV_PROM_PGW_HOST=192.168.0.223:9091
@@ -128,11 +162,11 @@ The output:
 
 #### Prometheus metrics:
 
-Prometheus push-gatway individual metrics
+Prometheus push-gateway individual metrics
 
 ![prom-push-gw-metrics](docs/pics/prom-push-gw-metrics.png)
 
-Prometheus push-gatway all metrics
+Prometheus push-gateway all metrics
 
 ![prom-push-gw-metrics-all](docs/pics/prom-push-gw-metrics-all.png)
 
