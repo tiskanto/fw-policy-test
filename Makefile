@@ -21,7 +21,6 @@ else
 CUSTOM_FILE_ARGS := -v $(USER_INPUT_FILE):/app/data/test_data.yaml
 endif
 
-
 .PHONY: help
 help:
 	@ echo "'make' options are:"
