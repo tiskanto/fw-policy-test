@@ -13,6 +13,15 @@ IMAGE_EXISTS := $(shell docker image inspect $(DOCKER_IMAGE) > /dev/null 2>&1  ;
 ENV_PROM_PGW_HOST ?= 127.0.0.1:9091
 ENV_PROM_PGW_ENABLED ?= 0
 
+# User input vars when using customised test case file
+USER_INPUT_FILE ?=
+ifeq ($(USER_INPUT_FILE),)
+CUSTOM_FILE_ARGS :=
+else
+CUSTOM_FILE_ARGS := -v $(USER_INPUT_FILE):/app/data/test_data.yaml
+endif
+
+
 .PHONY: help
 help:
 	@ echo "'make' options are:"
@@ -22,7 +31,11 @@ help:
 	@ echo "- make clean-docker: clean & remove docker image $(PROJECT)"
 	@ echo "- make create-docker: create docker image $(PROJECT)"
 	@ echo "- make test-function: performs basic python module function calls"
+	@ echo "--------------------------------------------------------------------------"
 	@ echo "** Use ENV_PROM_PGW_HOST=<pgw_host:pgw_port> for prometheus push-gateway"
+	@ echo "** Use USER_INPUT_FILE=<local_path_for_test_case_file> in YAML format"
+	@ echo "note: USER_INPUT_FILE will be mounted as /app/data/test_data.yaml"
+	@ echo "--------------------------------------------------------------------------"
 
 .PHONY: run-pytest
 run-pytest:
@@ -38,7 +51,7 @@ else
 	@ $(MAKE) create-docker
 endif
 	@ echo "Running fw-policy-test as a docker image: $(DOCKER_IMAGE)"
-	@ docker run -t $(DOCKER_IMAGE) || true
+	@ docker run $(CUSTOM_FILE_ARGS) -t $(DOCKER_IMAGE) || true
 
 .PHONY: run-docker-pgw
 run-docker-pgw:
@@ -50,7 +63,7 @@ else
 endif
 	@ echo "Running fw-policy-test as a docker image: $(DOCKER_IMAGE)"
 	@ echo "With prometheus push-gateway: $(ENV_PROM_PGW_HOST)"
-	@ docker run -e PROM_PGW_ENABLED=1 -e PROM_PGW_HOST=$(ENV_PROM_PGW_HOST) -t $(DOCKER_IMAGE) || true
+	@ docker run $(CUSTOM_FILE_ARGS) -e PROM_PGW_ENABLED=1 -e PROM_PGW_HOST=$(ENV_PROM_PGW_HOST) -t $(DOCKER_IMAGE) || true
 
 .PHONY: clean-docker
 clean-docker:
@@ -66,4 +79,3 @@ create-docker: Dockerfile
 test-function:
 	@ echo "Testing core function"
 	@ sudo python3 -m tests.function_check
-
