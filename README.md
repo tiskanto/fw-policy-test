@@ -16,6 +16,7 @@
   - [Running Docker Application](#running-docker-application)
   - [Running Docker Application with Prometheus](#running-docker-application-with-prometheus-support)
     - [Prometheus Metrics](#prometheus-metrics)
+  - [Running Application with Combined Options](#running-application-with-combined-options)
 ---
 
 ## What:
@@ -193,3 +194,27 @@ Prometheus chart total test list
 Prometheus chart total tests - count
 
 ![prom-diagram-total-tests](docs/pics/prom-diagram-total-tests.png)
+
+### Running application with combined options
+
+Following are some samples when running docker application with combined uptions
+
+```
+# running as a docker apps with prometheus support & customised test case file data
+# note: customised test case file will be mounted as /app/data/test_data.yaml in docker
+
+shell> make run-docker-pgw ENV_PROM_PGW_HOST=192.168.0.223:9091 USER_INPUT_FILE=./data/custom_test_case.yaml
+
+# running as a docker apps with prometheus support only
+shell> make run-docker-pgw ENV_PROM_PGW_HOST=192.168.0.223:9091
+
+# running as a docker apps without prometheus support but with customised test case file
+shell> make run-docker USER_INPUT_FILE=./data/custom_test_case.yaml
+
+# running as a docker apps without prometheus support and with a default test case file
+shell> make run-docker USER_INPUT_FILE=./data/custom_test_case.yaml
+
+# running as a native pytest apps
+shell> make run-pytest
+
+```
