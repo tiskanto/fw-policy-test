@@ -48,7 +48,7 @@ Note:
 - At the very least a `pushgateway` and a `prometheus` is required
 - Having an `alertmanager` and `grafana` are optional
 
-## Intergation Steps
+## Integration Steps
 Following are the steps that can be followed to perform integration with `pushgateway` and `prometheus`
 
 #### Step1:
