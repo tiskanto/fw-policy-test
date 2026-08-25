@@ -14,7 +14,7 @@ help:
 	@ echo " - make k8-cronjob-pgw: create a kubernetes cronjob with push-gateway turned on"
 	@ echo " - make clean-k8-cronjob: clean a kubernetes cronjob"
 	@ echo " - make clean-k8-cronjob-pgw: clean a kubernetes cronjob that has push-gateway turned on"
-	@ echo " - make list-k8-cronkjob: list kubernetes cronjob"
+	@ echo " - make list-k8-cronjob: list kubernetes cronjob"
 	@ echo " - make check-kubectl: check if kubectl binary exists"
 	
 .PHONY: k8-cronjob

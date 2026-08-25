@@ -151,7 +151,8 @@ Other execution options:
 
 ### Running docker application with prometheus support
 
-For a more detailed implementation with `prometheus` and `push-gateway` please refer to [samples](samples) folder
+For a more detailed implementation with `prometheus` and `push-gateway` please refer to [samples](samples) folder and [prometheus-pushgateway-integration.md](docs/promotheus-pushgatway-intergration.md)
+
 
 ```
 shell> make run-docker-pgw ENV_PROM_PGW_HOST=192.168.0.223:9091
