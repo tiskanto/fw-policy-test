@@ -52,7 +52,7 @@ Note:
 Following are the steps that can be followed to perform integration with `pushgateway` and `prometheus`
 
 #### Step1:
-On your localhost where you want to run your application, edit [fw-policy-test-pgw.yaml](samples/fw-policy-test-pgw.yaml) from the [samples](samples) folder. Adjust the cronjob `schedule` frequency time and your `PROM_PGW_HOST`
+On your localhost where you want to run your application, edit [fw-policy-test-pgw.yaml](../samples/fw-policy-test-pgw.yaml) from the [samples](../samples) folder. Adjust the cronjob `schedule` frequency time and your `PROM_PGW_HOST`
 
 ```
 apiVersion: batch/v1
@@ -81,7 +81,7 @@ restartPolicy: Never
 ```
 
 #### Step2:
-Once the above file has been updated & saved reflecting to your infrastructure environment, then perform the following from [samples](samples) folder on your localhost where you host the application
+Once the above file has been updated & saved reflecting to your infrastructure environment, then perform the following from [samples](../samples) folder on your localhost where you host the application
 
 ```
 shell> make
@@ -106,7 +106,7 @@ shell> make clean-k8-cronjob-pgw
 ```
 
 #### Step3:
-Go into your remote host where you want to install & run `prometheus` and `pushgateway`. Please ensure that docker is installed and perform the copy of the [prometheus_pgw](samples/prometheus_pgw). Once copied, run the shell script with the following command:
+Go into your remote host where you want to install & run `prometheus` and `pushgateway`. Please ensure that docker is installed and perform the copy of the [prometheus_pgw](../samples/prometheus_pgw). Once copied, run the shell script with the following command:
 ```
 shell> ./run_docker_compose.sh
 Perform Docker Compose Function(s)
