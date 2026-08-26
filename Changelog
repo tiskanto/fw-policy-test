@@ -1,0 +1,15 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+Reference: https://keepachangelog.com/en/1.1.0/
+
+## [ Pre-release ]
+- Fixed all the issues prior to a release v0.01
+- Details can be found on git log --oneline --decorate --color --graph
+
+## [0.01]
+- Official Public Release
+

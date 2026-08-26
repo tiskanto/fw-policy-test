@@ -25,18 +25,18 @@ Please look at the following diagram for details:
 +-----------------------+
            |
            V
-+----------------------+    +------------- +    +----------------------+    +---------------+
++----------------------+    +--------------+    +----------------------+    +---------------+
 |                      |    |              |    |                      |    |               |
 | ephemeral jobs/batch |--->| Pushgateway  |<---| Prometheus Server(s) |--->| Grafana/Graph |
 |                      |    |              |    | **metrics  scraping  |    |   Dashboard   |
-+----------------------+    +------------- +    +----------------------+    +---------------+
++----------------------+    +--------------+    +----------------------+    +---------------+
                                    |
                                    V
-                            +------------- +    +------------- +    +------------- +
+                            +--------------+    +--------------+    +--------------+
                             |              |    |              |    |  - Slack     |
                             | Alertmanager |--->| Notification |--->|  - PagerDuty |
                             |              |    |    Rcvd's    |    |  - MSTeams   |
-                            +------------- +    +------------- +    +--------------+
+                            +--------------+    +--------------+    +--------------+
 ```
 Note:
 - `pushgateway` can be running on a localhost or on a remotehost (please ensure the ports are unique when running as local)

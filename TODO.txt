@@ -1,3 +1,7 @@
+TODO LIST:
+---------------------------------------------------------------------
+PRE-RELEASE
+---------------------------------------------------------------------
 - Fix grammar in README.me - [DONE]
 - Get the screenshots for the PGW chart stats - [DONE]
 - Fix the custom file execution on Makefile [DONE]
@@ -5,5 +9,10 @@
   >  Update the README.md
 - Get the samples doco ready for PGW implementation & guides [DONE]
 - Update the README.md about installation - [DONE]
-- Tag for v0.01 release
-- Create Changelog - Release note
+- Tag for v0.01 release - [DONE]
+- Create Changelog - Release note - [DONE]
+---------------------------------------------------------------------
+R0.01
+---------------------------------------------------------------------
+- Work on Scapy module
+- Test Scapy module into fw-firewall-test
