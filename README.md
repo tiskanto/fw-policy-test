@@ -1,3 +1,4 @@
+![Static Badge](https://img.shields.io/badge/release-v0.1-yellow?style=plastic) ![Static Badge](https://img.shields.io/badge/pytest-v9.1-brightgreen?style=plastic)
 # fw-policy-test
 
 ## Table of Contents
