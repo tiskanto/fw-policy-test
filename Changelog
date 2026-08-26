@@ -7,9 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Reference: https://keepachangelog.com/en/1.1.0/
 
 ## [ Pre-release ]
-- Fixed all the issues prior to a release v0.01
+- Fixed all the issues prior to a release v0.1
 - Details can be found on git log --oneline --decorate --color --graph
 
-## [0.01]
+## [0.1]
 - Official Public Release
 
