@@ -10,11 +10,12 @@ tcp_flag[PSH]=8
 tcp_flag[ACK]=16
 tcp_flag[URG]=32
 
-echo "tcp_flag values: ${tcp_flag[@]}"
-echo "tcp_flag values: ${(k)tcp_flag[@]}"
-echo "tcp_flag values: ${tcp_flag[PSH]}"
+echo "tcp_flag decimal list: ${tcp_flag[@]}"
+echo "tcp_flag flag list: ${(k)tcp_flag[@]}"
 
 for i in ${(k)tcp_flag[@]}
 do
-  echo "tcp_flag[$i]:$tcp_flag[$i] -  key: $i => value: $tcp_flag[$i]"
+  binary=$(echo "ibase=10;obase=2;$tcp_flag[$i]" | bc | xargs printf "%08d\n")
+  hexadecimal=$(echo "ibase=10;obase=16;$tcp_flag[$i]" | bc | xargs printf "%04X\n")
+  echo "key: $i => binary:$binary - hexadecimal:$hexadecimal - decimal: $tcp_flag[$i]"
 done
