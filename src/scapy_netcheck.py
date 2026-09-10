@@ -7,7 +7,7 @@ target_addr = "192.168.0.181"
 
 def check_tcp_scapy(tcp_host: str = '127.0.0.1', tcp_port: int = 22) -> int :
     '''
-    Function which test TCP connection against a target host
+    Function that test TCP connection against a target host
     Returns: integer
     values
     - 0 : tcp port is closed
@@ -16,7 +16,8 @@ def check_tcp_scapy(tcp_host: str = '127.0.0.1', tcp_port: int = 22) -> int :
     - 3 : host is unreachable
     - 4 : other than above
     '''
-    tcp_pkt = IP(dst=tcp_host)/TCP(dport=tcp_port)
+    tcp_payload = "scapy tcp packet test payload"
+    tcp_pkt = IP(dst=tcp_host)/TCP(dport=tcp_port)/tcp_payload
     tcp_response = sr1(tcp_pkt, verbose=False, timeout=4)
 
     if tcp_response is None:
@@ -39,5 +40,46 @@ def check_tcp_scapy(tcp_host: str = '127.0.0.1', tcp_port: int = 22) -> int :
         # everything else
         return 4
 
-check = check_tcp_scapy(target_addr, int(target_port))
-print(f"check result: {check}")
+def check_udp_scapy(udp_host: str = '127.0.0.1', udp_port: int = 137) -> int :
+    '''
+    Function that test UDP connection against a target host
+    Returns: integer
+    values
+    - 0 : udp port is closed
+    - 1 : udp port is opened / filtered
+    - 2 : network/host unreachable
+    - 3 : other than above
+    '''
+    udp_payload = "scapy udp packet test payload"
+    udp_pkt = IP(dst=udp_host)/UDP(dport=udp_port)/udp_payload
+    udp_response = sr1(udp_pkt, verbose=False, timeout=4)
+
+    if udp_response is None:
+        # packet is being silently dropped or being filtered or open
+        return 1
+    elif udp_response.haslayer(ICMP):
+        # ICMP type destination unreachable
+        if udp_response[ICMP].type == 3 :
+            # ICMP code port unreachable - closed
+            if udp_response[ICMP].code == 3 :
+                return 0
+            # ICMP code network unreachable
+            elif udp_response[ICMP].code == 0 :
+                return 2
+            # ICMP code host unreachable
+            elif udp_response[ICMP].code == 1 :
+                return 2
+            # other than above
+            else:
+                return 3
+        # other than above
+        else:
+            return 3
+    # other than above
+    else:
+        return 3
+
+check_tcp = check_tcp_scapy(target_addr, int(target_port))
+check_udp = check_udp_scapy(target_addr, int(target_port))
+print(f"TCP check result: {check_tcp}")
+print(f"UDP check result: {check_udp}")
