@@ -69,14 +69,17 @@ def check_udp_scapy(udp_host: str = '127.0.0.1', udp_port: int = 137) -> int :
             # ICMP code host unreachable
             elif udp_response[ICMP].code == 1 :
                 return 2
-            # other than above
             else:
+                # other than above
                 return 3
-        # other than above
         else:
+            # other than above
             return 3
-    # other than above
+    # making sure we also trap UDP application specific response
+    elif udp_response.haslayer(UDP):
+        return 1
     else:
+        # other than above
         return 3
 
 check_tcp = check_tcp_scapy(target_addr, int(target_port))
