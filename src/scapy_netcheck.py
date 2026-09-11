@@ -1,10 +1,10 @@
 from scapy.all import *
-# has to be run with wheel privilege
 
-# test vars
-target_port = 2222
-target_addr = "192.168.0.181"
+# scapy gen vars
+conn_timeout = 2
+conn_verbosity = False
 
+# tcp test connection
 def check_tcp_scapy(tcp_host: str = '127.0.0.1', tcp_port: int = 22) -> int :
     '''
     Function that test TCP connection against a target host
@@ -18,7 +18,7 @@ def check_tcp_scapy(tcp_host: str = '127.0.0.1', tcp_port: int = 22) -> int :
     '''
     tcp_payload = "scapy tcp packet test payload"
     tcp_pkt = IP(dst=tcp_host)/TCP(dport=tcp_port)/tcp_payload
-    tcp_response = sr1(tcp_pkt, verbose=False, timeout=4)
+    tcp_response = sr1(tcp_pkt, verbose=conn_verbosity, timeout=conn_timeout)
 
     if tcp_response is None:
         # packet is being silently dropped due to filter or gets timeout
@@ -40,6 +40,7 @@ def check_tcp_scapy(tcp_host: str = '127.0.0.1', tcp_port: int = 22) -> int :
         # everything else
         return 4
 
+# udp test connection
 def check_udp_scapy(udp_host: str = '127.0.0.1', udp_port: int = 137) -> int :
     '''
     Function that test UDP connection against a target host
@@ -52,7 +53,7 @@ def check_udp_scapy(udp_host: str = '127.0.0.1', udp_port: int = 137) -> int :
     '''
     udp_payload = "scapy udp packet test payload"
     udp_pkt = IP(dst=udp_host)/UDP(dport=udp_port)/udp_payload
-    udp_response = sr1(udp_pkt, verbose=False, timeout=4)
+    udp_response = sr1(udp_pkt, verbose=conn_verbosity, timeout=conn_timeout)
 
     if udp_response is None:
         # packet is being silently dropped or being filtered or open
@@ -82,6 +83,7 @@ def check_udp_scapy(udp_host: str = '127.0.0.1', udp_port: int = 137) -> int :
         # other than above
         return 3
 
+# icmp test connection
 def check_icmp_scapy(icmp_host: str = '127.0.0.1') -> int :
     '''
     Function that test ICMP echo against a target host
@@ -93,7 +95,7 @@ def check_icmp_scapy(icmp_host: str = '127.0.0.1') -> int :
     '''
     icmp_payload = "scapy icmp echo test payload"
     icmp_pkt = IP(dst=icmp_host)/ICMP()/icmp_payload
-    icmp_response = sr1(icmp_pkt, verbose=False, timeout=4)
+    icmp_response = sr1(icmp_pkt, verbose=conn_verbosity, timeout=conn_timeout)
 
     if icmp_response is None:
         # packet is being silently dropped & not pingable
@@ -105,9 +107,3 @@ def check_icmp_scapy(icmp_host: str = '127.0.0.1') -> int :
         # other than above
         return 2
 
-check_tcp = check_tcp_scapy(target_addr, int(target_port))
-check_udp = check_udp_scapy(target_addr, int(target_port))
-check_icmp = check_icmp_scapy(target_addr)
-print(f"TCP check result: {check_tcp}")
-print(f"UDP check result: {check_udp}")
-print(f"ICMP check result: {check_icmp}")
