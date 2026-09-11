@@ -82,7 +82,32 @@ def check_udp_scapy(udp_host: str = '127.0.0.1', udp_port: int = 137) -> int :
         # other than above
         return 3
 
+def check_icmp_scapy(icmp_host: str = '127.0.0.1') -> int :
+    '''
+    Function that test ICMP echo against a target host
+    Returns: integer
+    values
+    - 0 : NOT pingable via ICMP ECHO
+    - 1 : pingable via ICMP ECHO
+    - 2 : other than above
+    '''
+    icmp_payload = "scapy icmp echo test payload"
+    icmp_pkt = IP(dst=icmp_host)/ICMP()/icmp_payload
+    icmp_response = sr1(icmp_pkt, verbose=False, timeout=4)
+
+    if icmp_response is None:
+        # packet is being silently dropped & not pingable
+        return 0
+    elif icmp_response[ICMP].type == 0 and icmp_response[ICMP].code == 0 :
+        # packet returns with icmp echo reply
+        return 1
+    else:
+        # other than above
+        return 2
+
 check_tcp = check_tcp_scapy(target_addr, int(target_port))
 check_udp = check_udp_scapy(target_addr, int(target_port))
+check_icmp = check_icmp_scapy(target_addr)
 print(f"TCP check result: {check_tcp}")
 print(f"UDP check result: {check_udp}")
+print(f"ICMP check result: {check_icmp}")
