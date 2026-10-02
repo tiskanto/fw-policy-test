@@ -27,6 +27,7 @@ def test_network_check(case, push_to_pgw):
     push_to_pgw.metrics = [
             {
                 "host"  : case['host'].replace(' ', '_'),
+                "method": case['method'],
                 "ip"    : case['ip'],
                 "proto" : case['proto'],
                 "port"  : case['port'],
