@@ -4,6 +4,10 @@ from src.scapy_netcheck import *
 
 def test_network_check(case, push_to_pgw):
 
+    # initialise the vars
+    check_result = 0
+    push_to_pgw.metrics = []
+
     # Packet test method: nmap
     if case['method'] == 'nmap':
       # ICMP
