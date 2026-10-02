@@ -11,15 +11,15 @@
       proto: tcp
       port: 22
       expected: 1
-- hostname: Linux System B
-  ip_addr: 192.168.0.191
+- hostname: Linux System AB
+  ip_addr: 192.168.0.181
   test_set:
-    - name: icmp_one
-      desc: testing ICMP echo
-      method: scapy
-      proto: icmp
-      port: 0
-      expected: 0
+    - name: udp_one
+      desc: testing UDP port
+      method: nmap
+      proto: udp
+      port: 137
+      expected: 1
 - hostname: Linux System C
   ip_addr: 192.168.17.221
   test_set:
@@ -30,11 +30,29 @@
       port: 0
       expected: 1
 - hostname: Linux System D
-  ip_addr: 192.168.19.222
+  ip_addr: 192.168.0.181
   test_set:
     - name: icmp one
       desc: testing icmp
       method: scapy
       proto: icmp
       port: 0
+      expected: 1
+- hostname: Linux System EF
+  ip_addr: 192.168.0.181
+  test_set:
+    - name: tcp one
+      desc: testing tcp
+      method: scapy
+      proto: tcp
+      port: 22
+      expected: 1
+- hostname: Linux System GH
+  ip_addr: 192.168.0.181
+  test_set:
+    - name: udp one
+      desc: testing udp
+      method: scapy
+      proto: udp
+      port: 137
       expected: 1
