@@ -4,41 +4,29 @@ from scapy.all import *
 conn_timeout = 2
 conn_verbosity = False
 
-# tcp test connection
-def check_tcp_scapy(tcp_host: str = '127.0.0.1', tcp_port: int = 22) -> int :
+# icmp test connection
+def check_icmp_scapy(icmp_host: str = '127.0.0.1') -> int :
     '''
-    Function that test TCP connection against a target host
+    Function that test ICMP echo against a target host
     Returns: integer
     values
-    - 0 : tcp port is closed
-    - 1 : tcp port is opened
-    - 2 : tcp port is silently dropped/timeout
-    - 3 : host is unreachable
-    - 4 : other than above
+    - 0 : NOT pingable via ICMP ECHO
+    - 1 : pingable via ICMP ECHO
+    - 2 : other than above
     '''
-    tcp_payload = "scapy tcp packet test payload"
-    tcp_pkt = IP(dst=tcp_host)/TCP(dport=tcp_port)/tcp_payload
-    tcp_response = sr1(tcp_pkt, verbose=conn_verbosity, timeout=conn_timeout)
+    icmp_payload = "scapy icmp echo test payload"
+    icmp_pkt = IP(dst=icmp_host)/ICMP()/icmp_payload
+    icmp_response = sr1(icmp_pkt, verbose=conn_verbosity, timeout=conn_timeout)
 
-    if tcp_response is None:
-        # packet is being silently dropped due to filter or gets timeout
-        return 2
-    elif tcp_response.haslayer(ICMP):
-        # packt has no routes/unreachable
-        return 3
-    elif tcp_response.haslayer(TCP):
-        # packet return TCP flag syn/ack - open
-        if tcp_response[TCP].flags.value == 18 :
-            return 1
-        # packet return TCP flag rst/ack - closed
-        elif tcp_response[TCP].flags.value == 20 :
-            return 0
-        else:
-            # everything else
-            return 4
+    if icmp_response is None:
+        # packet is being silently dropped & not pingable
+        return 0
+    elif icmp_response[ICMP].type == 0 and icmp_response[ICMP].code == 0 :
+        # packet returns with icmp echo reply
+        return 1
     else:
-        # everything else
-        return 4
+        # other than above
+        return 2
 
 # udp test connection
 def check_udp_scapy(udp_host: str = '127.0.0.1', udp_port: int = 137) -> int :
@@ -83,27 +71,40 @@ def check_udp_scapy(udp_host: str = '127.0.0.1', udp_port: int = 137) -> int :
         # other than above
         return 3
 
-# icmp test connection
-def check_icmp_scapy(icmp_host: str = '127.0.0.1') -> int :
+
+# tcp test connection
+def check_tcp_scapy(tcp_host: str = '127.0.0.1', tcp_port: int = 22) -> int :
     '''
-    Function that test ICMP echo against a target host
+    Function that test TCP connection against a target host
     Returns: integer
     values
-    - 0 : NOT pingable via ICMP ECHO
-    - 1 : pingable via ICMP ECHO
-    - 2 : other than above
+    - 0 : tcp port is closed
+    - 1 : tcp port is opened
+    - 2 : tcp port is silently dropped/timeout
+    - 3 : host is unreachable
+    - 4 : other than above
     '''
-    icmp_payload = "scapy icmp echo test payload"
-    icmp_pkt = IP(dst=icmp_host)/ICMP()/icmp_payload
-    icmp_response = sr1(icmp_pkt, verbose=conn_verbosity, timeout=conn_timeout)
+    tcp_payload = "scapy tcp packet test payload"
+    tcp_pkt = IP(dst=tcp_host)/TCP(dport=tcp_port)/tcp_payload
+    tcp_response = sr1(tcp_pkt, verbose=conn_verbosity, timeout=conn_timeout)
 
-    if icmp_response is None:
-        # packet is being silently dropped & not pingable
-        return 0
-    elif icmp_response[ICMP].type == 0 and icmp_response[ICMP].code == 0 :
-        # packet returns with icmp echo reply
-        return 1
-    else:
-        # other than above
+    if tcp_response is None:
+        # packet is being silently dropped due to filter or gets timeout
         return 2
+    elif tcp_response.haslayer(ICMP):
+        # packt has no routes/unreachable
+        return 3
+    elif tcp_response.haslayer(TCP):
+        # packet return TCP flag syn/ack - open
+        if tcp_response[TCP].flags.value == 18 :
+            return 1
+        # packet return TCP flag rst/ack - closed
+        elif tcp_response[TCP].flags.value == 20 :
+            return 0
+        else:
+            # everything else
+            return 4
+    else:
+        # everything else
+        return 4
 

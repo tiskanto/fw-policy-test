@@ -60,13 +60,16 @@ def pytest_generate_tests(metafunc):
                 ip = i.get('ip_addr')
                 for j in i.get('test_set') :
                     name = j.get('name')
+                    method = j.get('method')
                     proto = j.get('proto')
                     port = j.get('port')
                     exp = j.get('expected')
                     cases.append(
-                                   dict(host=host, ip=ip, \
-                                   name=name, proto=proto,\
-                                   port=port, exp=exp) \
+                                   dict(
+                                       host=host, ip=ip, \
+                                       name=name, method=method, \
+                                       proto=proto, port=port, \
+                                       exp=exp) \
                                 )
 
         ids = [
@@ -74,6 +77,7 @@ def pytest_generate_tests(metafunc):
                 f"{c.get('ip')}-" \
                 f"{c.get('proto')}-" \
                 f"{c.get('port')}-" \
+                f"{c.get('method')}-" \
                 f"expected:{c.get('exp')}" \
                 for c in cases
               ]
@@ -99,6 +103,7 @@ def push_to_pgw():
                         "network_test_result", \
                         labelnames=[
                             'instance',  \
+                            'method',    \
                             'host',      \
                             'ip',        \
                             'proto',     \
@@ -111,6 +116,7 @@ def push_to_pgw():
                      )
             g.labels(
                        'test_instance', \
+                        metric['method'], \
                         metric['host'], \
                         metric['ip'], \
                         metric['proto'], \
