@@ -11,34 +11,19 @@
       proto: tcp
       port: 22
       expected: 1
-- hostname: Linux System AB
-  ip_addr: 192.168.0.223
-  test_set:
     - name: udp_one
       desc: testing UDP port
       method: nmap
       proto: udp
       port: 137
       expected: 1
-- hostname: Linux System C
-  ip_addr: 192.168.17.221
-  test_set:
-    - name: icmp one
-      desc: testing icmp
-      method: nmap
-      proto: icmp
-      port: 0
-      expected: 0
-- hostname: Linux System CD
-  ip_addr: 192.168.0.223
-  test_set:
     - name: icmp one
       desc: testing icmp
       method: nmap
       proto: icmp
       port: 0
       expected: 1
-- hostname: Linux System D
+- hostname: Linux System B
   ip_addr: 192.168.0.181
   test_set:
     - name: icmp one
@@ -47,25 +32,19 @@
       proto: icmp
       port: 0
       expected: 1
-- hostname: Linux System EF
-  ip_addr: 192.168.0.181
-  test_set:
     - name: tcp one
       desc: testing tcp
       method: scapy
       proto: tcp
       port: 22
       expected: 1
-- hostname: Linux System GH
-  ip_addr: 192.168.0.181
-  test_set:
     - name: udp one
       desc: testing udp
       method: scapy
       proto: udp
       port: 137
       expected: 1
-- hostname: Linux System IJ
+- hostname: Linux System C
   ip_addr: 192.168.7.181
   test_set:
     - name: ICMP one
@@ -74,3 +53,27 @@
       proto: icmp
       port: 0
       expected: 0
+- hostname: Linux System D
+  ip_addr: 192.168.17.221
+  test_set:
+    - name: icmp one
+      desc: testing icmp
+      method: nmap
+      proto: icmp
+      port: 0
+      expected: 0
+- hostname: Linux System E
+  ip_addr: 192.168.0.198
+  test_set:
+    - name: udp one
+      desc: testing udp
+      method: nmap
+      proto: udp
+      port: 137
+      expected: 1
+    - name: tcp one
+      desc: testing tcp
+      method: scapy
+      proto: tcp
+      port: 22
+      expected: 1
