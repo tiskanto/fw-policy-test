@@ -13,7 +13,7 @@ IMAGE_EXISTS := $(shell docker image inspect $(DOCKER_IMAGE) > /dev/null 2>&1  ;
 ENV_PROM_PGW_HOST ?= 127.0.0.1:9091
 ENV_PROM_PGW_ENABLED ?= 0
 
-# User input vars when using customised test case file
+# User input vars when using customised test case file (docker-specific)
 USER_INPUT_FILE ?=
 ifeq ($(USER_INPUT_FILE),)
 CUSTOM_FILE_ARGS :=
@@ -39,7 +39,14 @@ help:
 .PHONY: run-pytest
 run-pytest:
 	@ echo "Running fw-policy-test as a pytest script"
-	@ sudo pytest -v -s --tb=no
+	@ export PROM_PGW_HOST=$(ENV_PROM_PGW_HOST)
+	@ export PROM_PGW_ENABLED=$(ENV_PROM_PGW_ENABLED)
+# User input file specific when running native pytest
+ifeq ($(USER_INPUT_FILE),)
+	@ sudo -E pytest -v -s --tb=no
+else
+	@ sudo -E pytest -v -s --tb=no --case-file=$(USER_INPUT_FILE)
+endif
 
 .PHONY: run-docker
 run-docker:
