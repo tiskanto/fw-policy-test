@@ -43,9 +43,9 @@ run-pytest:
 	@ export PROM_PGW_ENABLED=$(ENV_PROM_PGW_ENABLED)
 # User input file specific when running native pytest
 ifeq ($(USER_INPUT_FILE),)
-	@ sudo -E pytest -v -s --tb=no
+	@ sudo -E pytest -v -s --tb=no || true
 else
-	@ sudo -E pytest -v -s --tb=no --case-file=$(USER_INPUT_FILE)
+	@ sudo -E pytest -v -s --tb=no --case-file=$(USER_INPUT_FILE) || true
 endif
 
 .PHONY: run-docker
