@@ -4,7 +4,7 @@
 
 # Docker image vars
 PROJECT := fw-policy-test
-VERSION_TAG := 0.1
+VERSION_TAG := 0.2
 IMAGE_TAG = $(PROJECT)
 DOCKER_IMAGE = $(IMAGE_TAG):$(VERSION_TAG)
 IMAGE_EXISTS := $(shell docker image inspect $(DOCKER_IMAGE) > /dev/null 2>&1  ; echo $$? )
@@ -13,7 +13,7 @@ IMAGE_EXISTS := $(shell docker image inspect $(DOCKER_IMAGE) > /dev/null 2>&1  ;
 ENV_PROM_PGW_HOST ?= 127.0.0.1:9091
 ENV_PROM_PGW_ENABLED ?= 0
 
-# User input vars when using customised test case file
+# User input vars when using customised test case file (docker-specific)
 USER_INPUT_FILE ?=
 ifeq ($(USER_INPUT_FILE),)
 CUSTOM_FILE_ARGS :=
@@ -26,20 +26,29 @@ help:
 	@ echo "'make' options are:"
 	@ echo "- make run-pytest: run $(PROJECT) as a pytest script run-time"
 	@ echo "- make run-docker: run $(PROJECT) as a docker image container"
-	@ echo "- make run-docker-pgw: run $(PROJECT) as a docker image container with prometheus push-gateway support"
 	@ echo "- make clean-docker: clean & remove docker image $(PROJECT)"
 	@ echo "- make create-docker: create docker image $(PROJECT)"
 	@ echo "- make test-function: performs basic python module function calls"
-	@ echo "--------------------------------------------------------------------------"
-	@ echo "** Use ENV_PROM_PGW_HOST=<pgw_host:pgw_port> for prometheus push-gateway"
-	@ echo "** Use USER_INPUT_FILE=<local_path_for_test_case_file> in YAML format"
-	@ echo "note: USER_INPUT_FILE will be mounted as /app/data/test_data.yaml"
-	@ echo "--------------------------------------------------------------------------"
+	@ echo "+================================================================================+"
+	@ echo "| ** Use ENV_PROM_PGW_ENABLED=1 for prometheus push-gateway feature (default:0)  |"
+	@ echo "| ** Use ENV_PROM_PGW_HOST=<pgw_host:pgw_port> (default:127.0.0.1:9091)          |"
+	@ echo "| ** Use USER_INPUT_FILE=<test_case_file> (default:./data/test_data.yaml)        |"
+	@ echo "| note: USER_INPUT_FILE will be mounted as /app/data/test_data.yaml              |"
+	@ echo "+================================================================================+"
 
 .PHONY: run-pytest
 run-pytest:
 	@ echo "Running fw-policy-test as a pytest script"
-	@ sudo pytest -v -s --tb=no
+# User input file specific when running native pytest
+ifeq ($(USER_INPUT_FILE),)
+	@ export PROM_PGW_HOST=$(ENV_PROM_PGW_HOST) ; \
+	export PROM_PGW_ENABLED=$(ENV_PROM_PGW_ENABLED) ; \
+	sudo -E pytest -v -s --tb=no || true
+else
+	@ export PROM_PGW_HOST=$(ENV_PROM_PGW_HOST) ; \
+	export PROM_PGW_ENABLED=$(ENV_PROM_PGW_ENABLED) ; \
+	sudo -E pytest -v -s --tb=no --case-file=$(USER_INPUT_FILE) || true
+endif
 
 .PHONY: run-docker
 run-docker:
@@ -50,19 +59,14 @@ else
 	@ $(MAKE) create-docker
 endif
 	@ echo "Running fw-policy-test as a docker image: $(DOCKER_IMAGE)"
-	@ docker run $(CUSTOM_FILE_ARGS) -t $(DOCKER_IMAGE) || true
 
-.PHONY: run-docker-pgw
-run-docker-pgw:
-ifeq ($(IMAGE_EXISTS), 0)
-	@ echo "Docker image $(DOCKER_IMAGE) exists proceed with docker executions"
-else
-	@ echo "Docker image $(DOCKER_IMAGE) does *NOT* exist proceed with docker creation"
-	@ $(MAKE) create-docker
-endif
-	@ echo "Running fw-policy-test as a docker image: $(DOCKER_IMAGE)"
+# Prometheus gateway is enabled
+ifeq ($(ENV_PROM_PGW_ENABLED), 1)
 	@ echo "With prometheus push-gateway: $(ENV_PROM_PGW_HOST)"
 	@ docker run $(CUSTOM_FILE_ARGS) -e PROM_PGW_ENABLED=1 -e PROM_PGW_HOST=$(ENV_PROM_PGW_HOST) -t $(DOCKER_IMAGE) || true
+else
+	@ docker run $(CUSTOM_FILE_ARGS) -t $(DOCKER_IMAGE) || true
+endif
 
 .PHONY: clean-docker
 clean-docker:

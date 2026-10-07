@@ -146,9 +146,23 @@ The output:
 ![make-run-docker](docs/pics/sample-execution-fw-policy-test.png)
 
 Other execution options:
+```
+shell> make help
 
-![make-options](docs/pics/make-options.png)
+'make' options are:
+- make run-pytest: run fw-policy-test as a pytest script run-time
+- make run-docker: run fw-policy-test as a docker image container
+- make clean-docker: clean & remove docker image fw-policy-test
+- make create-docker: create docker image fw-policy-test
+- make test-function: performs basic python module function calls
++================================================================================+
+| ** Use ENV_PROM_PGW_ENABLED=1 for prometheus push-gateway feature (default:0)  |
+| ** Use ENV_PROM_PGW_HOST=<pgw_host:pgw_port> (default:127.0.0.1:9091)          |
+| ** Use USER_INPUT_FILE=<test_case_file> (default:./data/test_data.yaml)        |
+| note: USER_INPUT_FILE will be mounted as /app/data/test_data.yaml              |
++================================================================================+
 
+```
 
 ### Running docker application with prometheus support
 
