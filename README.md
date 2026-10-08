@@ -133,7 +133,7 @@ The test case file is in `YAML` format and the test case should reflect on what 
 | ip_addr | string | IP address of the target host |
 | name | string | name of the protocol / test |
 | desc | string | description what this test is for / all about |
-| method | string | test packet methods, possible values: `[ nmap | scapy ]` |
+| method | string | test packet methods, possible values: `nmap` or `scapy` |
 | proto | string | protocols possible option: TCP, UDP, ICMP |
 | port | integer | port of the protocol, possible option: TCP: 1-65535 / UDP: 1-65535 / ICMP: 0 |
 | expected | integer | possible options: 0: blocked / 1: open / 2: open/filtered / 3: other than above |
