@@ -187,7 +187,7 @@ shell> make run-docker ENV_PROM_PGW_HOST=192.168.0.223:9091
 
 The output:
 
-![make-run-docker-pgw](docs/pics/sample-execution-fw-policy-test-pgw.png)
+![make-run-docker-pgw](docs/pics/sample-execution-fw-policy-test-pgw-updated.png)
 
 #### Prometheus metrics:
 
