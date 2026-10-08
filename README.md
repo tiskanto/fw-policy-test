@@ -40,7 +40,10 @@ The background idea is to ensure that firewall policy compliances can be verifie
 - Native `pytest` & `python3` application
 - Containerized friendly and can be run as a `docker` image
 - Can be run in `kubernetes` as a `k8 cronjob` or as an arbitrary application via `k8 job`
-- Modules can be easily extended (next feature)
+- Modules can be easily extended
+- Current modules support:
+	- `nmap` method test packet (could be obtrusive)
+	- `scapy` method test packet (less obtrusive & more friendly)
 
 ## Design concept:
 Please find the following diagram for the architectural design of `fw-policy-test`
@@ -89,11 +92,13 @@ The test case file is in `YAML` format and the test case should reflect on what 
   test_set:
     - name: tcp_one
       desc: testing SSH port
+	  method: nmap
       proto: tcp
       port: 22
       expected: 1
     - name: tcp_two
       desc: testing dummy TCP port
+	  method: nmap
       proto: tcp
       port: 2222
       expected: 0
@@ -105,6 +110,7 @@ The test case file is in `YAML` format and the test case should reflect on what 
   test_set:
     - name: icmp_one
       desc: testing ICMP echo
+	  method: scapy
       proto: icmp
       port: 0
       expected: 0
@@ -113,6 +119,7 @@ The test case file is in `YAML` format and the test case should reflect on what 
   test_set:
     - name: icmp one
       desc: testing icmp
+	  method: scapy
       proto: icmp
       port: 0
       expected: 1
@@ -126,9 +133,14 @@ The test case file is in `YAML` format and the test case should reflect on what 
 | ip_addr | string | IP address of the target host |
 | name | string | name of the protocol / test |
 | desc | string | description what this test is for / all about |
+| method | string | test packet methods, possible values: `[ nmap | scapy ]` |
 | proto | string | protocols possible option: TCP, UDP, ICMP |
 | port | integer | port of the protocol, possible option: TCP: 1-65535 / UDP: 1-65535 / ICMP: 0 |
 | expected | integer | possible options: 0: blocked / 1: open / 2: open/filtered / 3: other than above |
+
+For details expected return code for each method please refer to the the following:
+- [method: nmap](src/nmap_netcheck.py)
+- [method: scapy](src/scapy_netcheck.py)
 
 ## Running the application:
 
@@ -170,7 +182,7 @@ For a more detailed implementation with `prometheus` and `push-gateway` please r
 
 
 ```
-shell> make run-docker-pgw ENV_PROM_PGW_HOST=192.168.0.223:9091
+shell> make run-docker ENV_PROM_PGW_HOST=192.168.0.223:9091
 ```
 
 The output:
@@ -219,10 +231,10 @@ Following are some samples when running the application with combined options
 # running as a docker apps with prometheus support & customised test case file data
 # note: customised test case file will be mounted as /app/data/test_data.yaml in docker
 
-shell> make run-docker-pgw ENV_PROM_PGW_HOST=192.168.0.223:9091 USER_INPUT_FILE=./data/custom_test_case.yaml
+shell> make run-docker ENV_PROM_PGW_HOST=192.168.0.223:9091 USER_INPUT_FILE=./data/custom_test_case.yaml
 
 # running as a docker apps with prometheus support only
-shell> make run-docker-pgw ENV_PROM_PGW_HOST=192.168.0.223:9091
+shell> make run-docker ENV_PROM_PGW_HOST=192.168.0.223:9091
 
 # running as a docker apps without prometheus support but with customised test case file
 shell> make run-docker USER_INPUT_FILE=./data/custom_test_case.yaml
