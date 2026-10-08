@@ -1,4 +1,4 @@
-![Static Badge](https://img.shields.io/badge/release-v0.1-yellow?style=plastic) ![Static Badge](https://img.shields.io/badge/pytest-v9.1-brightgreen?style=plastic)
+![Static Badge](https://img.shields.io/badge/release-v0.2-yellow?style=plastic) ![Static Badge](https://img.shields.io/badge/pytest-v9.1-brightgreen?style=plastic)
 # fw-policy-test
 
 ## Table of Contents
@@ -92,13 +92,13 @@ The test case file is in `YAML` format and the test case should reflect on what 
   test_set:
     - name: tcp_one
       desc: testing SSH port
-	  method: nmap
+      method: nmap
       proto: tcp
       port: 22
       expected: 1
     - name: tcp_two
       desc: testing dummy TCP port
-	  method: nmap
+      method: nmap
       proto: tcp
       port: 2222
       expected: 0
@@ -110,7 +110,7 @@ The test case file is in `YAML` format and the test case should reflect on what 
   test_set:
     - name: icmp_one
       desc: testing ICMP echo
-	  method: scapy
+      method: scapy
       proto: icmp
       port: 0
       expected: 0
@@ -119,7 +119,7 @@ The test case file is in `YAML` format and the test case should reflect on what 
   test_set:
     - name: icmp one
       desc: testing icmp
-	  method: scapy
+      method: scapy
       proto: icmp
       port: 0
       expected: 1
