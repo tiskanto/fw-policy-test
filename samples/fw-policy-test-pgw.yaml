@@ -21,7 +21,7 @@ spec:
           hostNetwork: true
           containers:
           - name: fw-policy-test-pgw
-            image: fw-policy-test:0.1
+            image: fw-policy-test:0.2
             imagePullPolicy: Never
             command: ["pytest"]
             args: ["-v" , "-s", "--tb=no"]

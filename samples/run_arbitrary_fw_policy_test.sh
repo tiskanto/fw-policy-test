@@ -7,7 +7,7 @@
 function run_normal() {
 	kubectl run my-task \
 	  --rm -it \
-	  --image=fw-policy-test:0.1\
+	  --image=fw-policy-test:0.2\
 	  --overrides='
 	{
 	  "spec": {
@@ -15,7 +15,7 @@ function run_normal() {
 	    "containers": [
 	      {
 	        "name": "my-task",
-	        "image": "fw-policy-test:0.1",
+	        "image": "fw-policy-test:0.2",
 	        "imagePullPolicy": "Never",
 	        "stdin": true,
 	        "tty": true
@@ -31,7 +31,7 @@ function run_pgw() {
 	  --env="PROM_PGW_ENABLED=1" \
 	  --env="PROM_PGW_HOST=${1}" \
 	  --rm -it \
-	  --image=fw-policy-test:0.1
+	  --image=fw-policy-test:0.2
 }
 
 # help function

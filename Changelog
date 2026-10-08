@@ -13,3 +13,8 @@ Reference: https://keepachangelog.com/en/1.1.0/
 ## [0.1]
 - Official Public Release
 
+## [0.2]
+- Added extensible module
+- Added option to choose packet test methods: [ scapy | nmap ]
+- Added scapy module for a less obtrusive test & more friendly to the network probes
+- Refactored Makefile to be more efficient

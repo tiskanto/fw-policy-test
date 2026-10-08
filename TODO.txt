@@ -14,5 +14,10 @@ PRE-RELEASE
 ---------------------------------------------------------------------
 R0.01
 ---------------------------------------------------------------------
-- Work on Scapy module
-- Test Scapy module into fw-firewall-test
+- Work on Scapy module - [DONE]
+- Test Scapy module into fw-firewall-test - [DONE]
+---------------------------------------------------------------------
+R0.02
+---------------------------------------------------------------------
+- Work on YAML verification schema for the test case
+- More robust unit test when deploying new features
