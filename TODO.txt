@@ -1,6 +1,6 @@
 TODO LIST:
 ---------------------------------------------------------------------
-PRE-RELEASE
+PRE-RELEASE - R0.1
 ---------------------------------------------------------------------
 - Fix grammar in README.me - [DONE]
 - Get the screenshots for the PGW chart stats - [DONE]
@@ -12,12 +12,12 @@ PRE-RELEASE
 - Tag for v0.01 release - [DONE]
 - Create Changelog - Release note - [DONE]
 ---------------------------------------------------------------------
-R0.01
+R0.2
 ---------------------------------------------------------------------
 - Work on Scapy module - [DONE]
 - Test Scapy module into fw-firewall-test - [DONE]
 ---------------------------------------------------------------------
-R0.02
+R0.3
 ---------------------------------------------------------------------
 - Work on YAML verification schema for the test case
 - More robust unit test when deploying new features
