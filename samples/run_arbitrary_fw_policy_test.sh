@@ -1,7 +1,10 @@
 #!/bin/sh
-######################################
-# Run arbitrary docker image via k8
-######################################
+###################################################
+# Run arbitrary docker image via k8               #
+# Note: Please use the Makefile version           #
+#       this script is being kept for a record    #
+#       keeping only                              #
+###################################################
 
 # General vars
 # Note: change the VERSION_TAG according to the release version
