@@ -40,6 +40,7 @@ The background idea is to ensure that firewall policy compliances can be verifie
 - Native `pytest` & `python3` application
 - Containerized friendly and can be run as a `docker` image
 - Can be run in `kubernetes` as a `k8 cronjob` or as an arbitrary application via `k8 job`
+- Supports `prometheus` and `push-gateway` integration, please refer to the following docs for details: [prometheus-pushgateway-integration.md](docs/promotheus-pushgatway-intergration.md)
 - Modules can be easily extended
 - Current modules support:
 	- `nmap` method test packet (could be obtrusive)

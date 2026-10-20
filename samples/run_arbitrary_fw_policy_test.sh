@@ -3,26 +3,17 @@
 # Run arbitrary docker image via k8
 ######################################
 
+# General vars
+# Note: change the VERSION_TAG according to the release version
+PROJECT=fw-policy-test
+VERSION_TAG=0.2
+DOCKER_IMAGE=${PROJECT}:${VERSION_TAG}
+
 # image without prometheus gateway (normal)
 function run_normal() {
 	kubectl run my-task \
 	  --rm -it \
-	  --image=fw-policy-test:0.2\
-	  --overrides='
-	{
-	  "spec": {
-	    "hostNetwork": true,
-	    "containers": [
-	      {
-	        "name": "my-task",
-	        "image": "fw-policy-test:0.2",
-	        "imagePullPolicy": "Never",
-	        "stdin": true,
-	        "tty": true
-	      }
-	    ]
-	  }
-	}'
+	  --image=${DOCKER_IMAGE}
 }
 
 # image with prometheus push-gateways
@@ -31,7 +22,7 @@ function run_pgw() {
 	  --env="PROM_PGW_ENABLED=1" \
 	  --env="PROM_PGW_HOST=${1}" \
 	  --rm -it \
-	  --image=fw-policy-test:0.2
+	  --image=${DOCKER_IMAGE}
 }
 
 # help function

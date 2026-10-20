@@ -8,9 +8,9 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: fw-policy-test-pgw-v1
+  name: ${PROJECT}-v1
   labels:
-    app: fw-policy-test-pgw-v1
+    app: ${PROJECT}-v1
 spec:
   schedule: "*/5 * * * *"
   jobTemplate:
@@ -20,8 +20,8 @@ spec:
         spec:
           hostNetwork: true
           containers:
-          - name: fw-policy-test-pgw
-            image: fw-policy-test:0.2
+          - name: ${PROJECT}-pgw
+            image: ${DOCKER_IMAGE}
             imagePullPolicy: Never
             command: ["pytest"]
             args: ["-v" , "-s", "--tb=no"]

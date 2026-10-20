@@ -2,6 +2,12 @@
 # Sample templates for fw-policy-test #
 #######################################
 
+# Docker image vars
+# Change the 'VERSION_TAG' according to the release version
+PROJECT := fw-policy-test
+VERSION_TAG := 0.2
+DOCKER_IMAGE = $(PROJECT):$(VERSION_TAG)
+
 KUBECTL := kubectl
 CHECK_KUBECTL := $(shell which $(KUBECTL) | grep -c '[[:alnum:]]' )
 K8_CRON_FILE := fw-policy-test.yaml
@@ -21,7 +27,9 @@ help:
 k8-cronjob: check-kubectl
 	@ if [ -f "$(K8_CRON_FILE)" ]; then \
 		echo "File: $(K8_CRON_FILE) exists" ;\
-		$(KUBECTL) apply -f $(K8_CRON_FILE) ;\
+		export PROJECT=$(PROJECT) ; \
+		export DOCKER_IMAGE=$(DOCKER_IMAGE) ; \
+		envsubst < $(K8_CRON_FILE) | $(KUBECTL) apply -f - ;\
 	else \
 		echo "File: $(K8_CRON_FILE) cannot be found" ;\
 	fi
@@ -30,7 +38,9 @@ k8-cronjob: check-kubectl
 clean-k8-cronjob: check-kubectl
 	@ if [ -f "$(K8_CRON_FILE)" ]; then \
 		echo "File: $(K8_CRON_FILE) exists" ;\
-		$(KUBECTL) delete -f $(K8_CRON_FILE) ;\
+		export PROJECT=$(PROJECT) ; \
+		export DOCKER_IMAGE=$(DOCKER_IMAGE) ; \
+		envsubst < $(K8_CRON_FILE) | $(KUBECTL) delete -f - ;\
 	else \
 		echo "File: $(K8_CRON_FILE) cannot be found" ;\
 	fi
@@ -39,7 +49,9 @@ clean-k8-cronjob: check-kubectl
 k8-cronjob-pgw: check-kubectl
 	@ if [ -f "$(K8_CRON_PGW_FILE)" ]; then \
 		echo "File: $(K8_CRON_PGW_FILE) exists" ;\
-		$(KUBECTL) apply -f $(K8_CRON_PGW_FILE) ;\
+		export PROJECT=$(PROJECT) ; \
+		export DOCKER_IMAGE=$(DOCKER_IMAGE) ; \
+		envsubst < $(K8_CRON_PGW_FILE) | $(KUBECTL) apply -f - ;\
 	else \
 		echo "File: $(K8_CRON_PGW_FILE) cannot be found" ;\
 	fi
@@ -48,7 +60,9 @@ k8-cronjob-pgw: check-kubectl
 clean-k8-cronjob-pgw: check-kubectl
 	@ if [ -f "$(K8_CRON_PGW_FILE)" ]; then \
 		echo "File: $(K8_CRON_PGW_FILE) exists" ;\
-		$(KUBECTL) delete -f $(K8_CRON_PGW_FILE) ;\
+		export PROJECT=$(PROJECT) ; \
+		export DOCKER_IMAGE=$(DOCKER_IMAGE) ; \
+		envsubst < $(K8_CRON_PGW_FILE) | $(KUBECTL) delete -f - ;\
 	else \
 		echo "File: $(K8_CRON_PGW_FILE) cannot be found" ;\
 	fi
